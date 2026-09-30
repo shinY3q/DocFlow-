@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DocFlow — пакет документів з таблиці</title>
+<meta name="description" content="DocFlow збирає сотні претензій, актів і платіжних доручень з вашої таблиці та вашого шаблону Word. Ранній доступ для українських компаній.">
+<link rel="icon" type="image/png" href="assets/images/favicon.png">
+<link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
+<meta property="og:title" content="DocFlow — пакет документів з таблиці за хвилини">
+<meta property="og:description" content="Претензії, акти й платіжні доручення з вашої таблиці та вашого шаблону. Ранній доступ.">
+<meta property="og:image" content="assets/images/logo.png">
+<link rel="preload" href="assets/fonts/onest-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/manrope-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/analytics.js"></script>
+
+<link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+
+<!-- Заставка: логотип малюється штрихами (Lottie), потім відкривається сторінка -->
+<div class="splash" id="splash" role="presentation">
+  <div class="splash-in">
+    <div class="splash-logo" id="splashLogo" aria-hidden="true"></div>
+    <div class="splash-word">Doc<b>Flow</b></div>
+    <div class="splash-tag">Документи з таблиці за хвилини</div>
+  </div>
+  <button class="splash-skip" type="button" id="splashSkip">Пропустити</button>
+</div>
+<script src="assets/js/splash.js"></script>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="DocFlow — на початок"><img src="assets/images/logo-mark.png" alt="" width="60" height="40">DocFlow</a>
+    <nav class="nav" aria-label="Розділи">
+      <a href="#how">Як це працює</a>
+      <a href="#pricing">Тарифи</a>
+      <a href="#faq">Питання</a>
+    </nav>
+    <a class="btn sm" href="#join" data-cta="header">Ранній доступ</a>
+  </div>
+</header>
+
+<main id="top">
+<!-- 1. HERO -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <p class="kicker">Для бухгалтерій, юристів та операційних команд</p>
+      <h1>Пакет документів з&nbsp;вашої таблиці за&nbsp;хвилини замість днів</h1>
+      <p class="lead">Завантажте таблицю з білінгу чи 1С і свій шаблон Word. DocFlow збере сотні претензій, актів або платіжних доручень, сам обере потрібний шаблон і перевірить суми до друку.</p>
+      <div class="hero-cta">
+        <a class="btn" href="#join" data-cta="hero">Отримати ранній доступ <span class="arr" aria-hidden="true">→</span></a>
+        <a class="btn line" href="#how" data-cta="hero_how">Як це працює</a>
+      </div>
+      <div class="hero-meta"><span>Ваші шаблони без переробки</span><span>Excel і CSV з будь-якої системи</span><span>Продукт у розробці</span></div>
+    </div>
+
+    <div class="stage" id="stage">
+      <div class="card sheet">
+        <div class="xl-bar"><span class="xl-ico" aria-hidden="true">XLSX</span><span class="xl-name">borzhnyky_veresen.xlsx</span><span class="xl-meta">412 рядків</span></div>
+        <div class="xl-fx" aria-hidden="true"><span class="ref" id="fxRef">B2</span><span class="fx">fx</span><span class="val" id="fxVal">Коваленко О. П.</span></div>
+        <div class="tscroll">
+          <table class="xl" id="demoTable" aria-label="Приклад таблиці боржників">
+            <thead>
+              <tr class="cols" aria-hidden="true"><th class="rn"></th><th>A</th><th>B</th><th>C</th><th>D</th></tr>
+              <tr class="head"><th class="rn">1</th><th>ПІБ / Назва</th><th>Договір</th><th>Борг, грн</th><th>Прострочка</th></tr>
+            </thead>
+            <tbody>
+              <tr class="on" data-i="0" tabindex="0"><td class="rn">2</td><td>Коваленко О. П.</td><td>ІН-20417</td><td class="num">1&nbsp;240,00</td><td><span class="st warn">32 дні</span></td></tr>
+              <tr data-i="1" tabindex="0"><td class="rn">3</td><td>ТОВ «Весна»</td><td>ЮО-3308</td><td class="num">18&nbsp;960,50</td><td><span class="st hot">97 днів</span></td></tr>
+              <tr data-i="2" tabindex="0"><td class="rn">4</td><td>Мельник І. В.</td><td>ІН-19872</td><td class="num">612,00</td><td><span class="st">11 днів</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="xl-tabs" aria-hidden="true"><span class="on">Боржники</span><span>Оплати</span><span class="hint">Оберіть рядок ↑</span></div>
+      </div>
+      <svg class="pipe" id="pipe" aria-hidden="true" preserveAspectRatio="none">
+        <path class="pipe-rb" id="pipeRb"/>
+        <path class="pipe-flow" id="pipeFlow"/>
+      </svg>
+      <div class="card docwrap">
+        <div class="doc" id="demoDoc" aria-live="polite">
+          <div class="doc-head">
+            <div>ТОВ «Мережа-Сервіс»<br>Вих. № <span class="f" data-k="no" data-m="{{Номер}}">ІН-20417/П</span> від 30.09.2026</div>
+            <div class="to">Кому:<br><span class="f" data-k="name" data-m="{{ПІБ}}">Коваленко О. П.</span></div>
+          </div>
+          <h4 id="docTitle">Претензія</h4>
+          <p>За договором № <span class="f" data-k="dog" data-m="{{Договір}}">ІН-20417</span> станом на 30.09.2026 існує заборгованість у сумі <span class="f" data-k="sum" data-m="{{Борг}}">1&nbsp;240,00</span> грн. <span id="docTail">Просимо погасити її протягом 10 календарних днів з дня отримання претензії.</span></p>
+          <div class="sign"><span>Головний бухгалтер</span><i></i><span>О. Коваль</span></div>
+        </div>
+        <div class="doc-bar">
+          <span class="tpl">Шаблон: <b id="tplName">Претензія</b></span>
+          <label class="switch" for="marks"><input type="checkbox" id="marks"><span class="knob" aria-hidden="true"></span>Мітки шаблону</label>
+        </div>
+      </div>
+      <p class="note">Демонстрація з вигаданими даними</p>
+    </div>
+  </div>
+</section>
+
+<!-- 2. PROBLEM -->
+<section class="band" id="problem">
+  <svg class="band-ribbon" viewBox="0 0 520 220" aria-hidden="true"><path d="M 60 20 C 160 20 190 120 280 160 C 350 190 430 190 540 190"/></svg>
+  <div class="wrap band-grid">
+    <div class="band-head">
+      <p class="kicker">Знайома ситуація</p>
+      <h2>Кінець місяця, таблиця на 400 рядків і mail merge, який знову з'їхав</h2>
+      <p>Ці цифри ми почули в розмовах з людьми, які готують такі документи щомісяця.</p>
+    </div>
+    <div class="stats">
+      <div class="stat"><b>4–6<small>днів на місячний пакет</small></b><p>Формування, друк, підписання та відправка актів для 1&nbsp;200 контрагентів.</p></div>
+      <div class="stat"><b>200+<small>листів передруковано</small></b><p>Один зсув рядка в mail merge, і суми в претензіях належать іншим людям.</p></div>
+      <div class="stat"><b>1<small>людина знає, як це працює</small></b><p>Власний макрос чи скрипт тримається на одному розробнику. Він у відпустці, процес стоїть.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. SOLUTION -->
+<section class="sec" id="solution">
+  <div class="wrap split">
+    <div class="sec-head">
+      <p class="kicker">Що змінюється</p>
+      <h2>Ви лишаєте свої шаблони. Рутину бере система</h2>
+      <p class="lead">DocFlow не змушує переходити на нову облікову систему чи переробляти документи, з якими ви працюєте роками.</p>
+    </div>
+    <div class="benefits">
+      <div class="benefit"><span class="val">хвилини<small>замість 2–6 днів</small></span><div><h3>Весь пакет за один запуск</h3><p>Сотні документів збираються одночасно, кожен зі свого рядка таблиці. На виході DOCX або PDF, готові до друку чи відправки.</p></div></div>
+      <div class="benefit"><span class="val">0<small>ручного копіювання</small></span><div><h3>Суми й реквізити не з'їжджають</h3><p>Перед генерацією DocFlow показує порожні клітинки, некоректні ЄДРПОУ та IBAN і незвичні суми, щоб ви виправили їх до друку.</p></div></div>
+      <div class="benefit"><span class="val">1 раз<small>налаштувати правила</small></span><div><h3>Шаблон обирається сам</h3><p>Нагадування, претензія чи заява про судовий наказ залежно від суми та терміну прострочки. Правило ви задаєте один раз.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. HOW IT WORKS -->
+<section class="sec mist" id="how">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="kicker">Як це працює</p>
+      <h2>Чотири кроки від таблиці до готового пакета</h2>
+    </div>
+    <ol class="steps">
+      <li><h3>Завантажте таблицю</h3><p>Excel або CSV з білінгу, 1С, BAS чи вашої CRM. Переформатовувати не треба.</p></li>
+      <li><h3>Позначте місця в шаблоні</h3><p>У своєму Word-документі поставте мітки, наприклад <span class="tag">{{Борг}}</span>.</p></li>
+      <li><h3>Зіставте стовпці</h3><p>Вкажіть, який стовпець іде в яку мітку. Наступного місяця зіставлення вже збережене.</p></li>
+      <li><h3>Заберіть пакет</h3><p>Сотні готових документів і архів із пошуком за ЄДРПОУ чи номером договору.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- 4. SOCIAL PROOF -->
+<section class="sec" id="proof">
+  <div class="wrap proof">
+    <div>
+      <p class="kicker" style="margin-bottom:18px">З наших інтерв'ю</p>
+      <blockquote class="quote">
+        <p>Щомісяця на формування, друк, підписання, відправлення актів виконаних робіт може йти 4–6 днів.</p>
+        <footer>Власник мережі пунктів прийому платежів, Запоріжжя · 42 точки, 1&nbsp;200 контрагентів</footer>
+      </blockquote>
+      <blockquote class="quote">
+        <p>«Хто підтримує цю автоматизацію і що станеться, якщо цей розробник піде?»</p>
+        <footer>Той самий учасник про власне рішення компанії</footer>
+      </blockquote>
+    </div>
+    <div>
+      <div class="facts">
+        <div class="fact"><b>≈3&nbsp;500</b><span>українських організацій з масовим документообігом: фінустанови, банки, інтернет-провайдери</span></div>
+        <div class="fact"><b>500</b><span>платіжних доручень щодня в одного з учасників дослідження</span></div>
+        <div class="fact"><b>$4,58 млрд</b><span>світовий ринок автоматизації документів, зростання ≈8% на рік</span></div>
+      </div>
+      <p class="src">Цитати: глибинні інтерв'ю DocFlow, вересень 2026. Ринок: НБУ, НКЕК, Market Research Future.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING (fake door) -->
+<section class="sec mist" id="pricing">
+  <div class="wrap">
+    <div class="sec-head center">
+      <p class="kicker">Тарифи раннього доступу</p>
+      <h2>Оберіть формат під ваш обсяг</h2>
+    </div>
+    <div class="plans">
+      <article class="plan">
+        <div class="plan-name"><h3>Базовий</h3></div>
+        <p class="plan-desc">Для регулярних пакетів до 2&nbsp;000 документів</p>
+        <div class="plan-price">
+          <span class="plan-label">Ціна раннього доступу</span>
+          <div class="price">10&nbsp;000<span>грн / міс</span></div>
+        </div>
+        <p class="plan-inc">Що входить</p>
+        <ul><li>до 2&nbsp;000 документів на місяць</li><li>до 10 шаблонів</li><li>перевірка сум і реквізитів</li><li>архів із пошуком</li></ul>
+        <button class="btn line" type="button" data-plan="base_10000">Обрати Базовий</button>
+      </article>
+      <article class="plan pro">
+        <svg class="plan-ribbon" viewBox="0 0 300 160" aria-hidden="true"><path d="M 40 -10 C 60 60 120 70 170 70 C 230 70 260 90 330 150"/></svg>
+        <div class="plan-name"><h3>Бізнес</h3><small>для 500+ документів</small></div>
+        <p class="plan-desc">Для команд з великим обсягом і кількома виконавцями</p>
+        <div class="plan-price">
+          <span class="plan-label">Ціна раннього доступу</span>
+          <div class="price">20&nbsp;000<span>грн / міс</span></div>
+        </div>
+        <p class="plan-inc">Що входить</p>
+        <ul><li>без ліміту документів</li><li>правила автовибору шаблону</li><li>кілька користувачів і ролей</li><li>підтримка команди з гарантованим часом відповіді</li></ul>
+        <button class="btn white" type="button" data-plan="business_20000">Обрати Бізнес</button>
+      </article>
+    </div>
+    <p class="fine"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8.5"/><path d="M10 9v5M10 6.2v.1"/></svg><span>Зараз оплата не стягується. Вибір тарифу допомагає нам зрозуміти ваші потреби й фіксує для вас ціну раннього доступу.</span></p>
+  </div>
+</section>
+
+<!-- 6. CTA -->
+<section class="cta" id="join">
+  <svg class="cta-ribbon" viewBox="0 0 560 240" aria-hidden="true"><path d="M 20 30 L 120 30 C 220 30 250 150 340 190 C 400 215 470 215 540 215"/></svg>
+  <div class="wrap cta-grid">
+    <div>
+      <p class="kicker" style="color:#CFE0F7;margin-bottom:14px">Ранній доступ</p>
+      <h2>Станьте одним із перших, хто спробує DocFlow</h2>
+      <p class="lead" style="margin-top:18px">Обов'язковий лише email. Що буде далі:</p>
+      <ol>
+        <li>Протягом тижня ми напишемо вам і домовимось про коротку розмову.</li>
+        <li>Ви надсилаєте знеособлену таблицю й один свій шаблон.</li>
+        <li>Ми повертаємо готовий пакет документів і питаємо, що покращити.</li>
+      </ol>
+    </div>
+    <div>
+      <form id="leadForm" novalidate>
+        <label for="f-email">Робочий email
+          <input id="f-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="name@company.ua" required>
+        </label>
+        <label for="f-name">Ім'я <span class="opt">необов'язково</span>
+          <input id="f-name" name="name" type="text" autocomplete="given-name">
+        </label>
+        <div class="row2">
+          <label for="f-role">Роль <span class="opt">необов'язково</span>
+            <select id="f-role" name="role">
+              <option value="">Оберіть</option><option>Бухгалтер</option><option>Юрист</option><option>Керівник / власник</option><option>IT / автоматизація</option><option>Інше</option>
+            </select>
+          </label>
+          <label for="f-volume">Документів на місяць <span class="opt">необов'язково</span>
+            <select id="f-volume" name="volume">
+              <option value="">Оберіть</option><option>до 100</option><option>100–500</option><option>500–2&nbsp;000</option><option>понад 2&nbsp;000</option>
+            </select>
+          </label>
+        </div>
+        <input type="hidden" id="f-plan" name="plan" value="">
+        <p class="planline" id="planLine" hidden>Обраний тариф: <b id="planName"></b></p>
+        <p class="err" id="formErr" role="alert"></p>
+        <button class="btn" type="submit" id="submitBtn">Отримати ранній доступ <span class="arr" aria-hidden="true">→</span></button>
+        <p class="privacy">Email використовуємо лише для запрошення до тестування DocFlow.</p>
+      </form>
+      <div class="ok" id="okBox" hidden>
+        <h3>Ви в списку раннього доступу</h3>
+        <p>Ми напишемо на вказаний email протягом тижня. Якщо у вас є колега, який теж готує документи вручну, поділіться з ним цим посиланням.</p>
+        <div class="copy"><span id="shareUrl"></span><button class="btn sm" type="button" id="copyBtn">Копіювати</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7. FAQ -->
+<section class="sec" id="faq">
+  <div class="wrap faq-grid">
+    <div class="sec-head" style="margin-bottom:0">
+      <p class="kicker">Питання</p>
+      <h2>Що зазвичай питають перед тестуванням</h2>
+    </div>
+    <div class="faq">
+      <details><summary>Чи потрібно переробляти наші шаблони?</summary><p>Ні. Ви додаєте мітки у свій наявний Word-документ. Оформлення, реквізити й підписи лишаються вашими.</p></details>
+      <details><summary>Де зберігаються наші дані?</summary><p>Таблиці обробляються лише для формування документів і не передаються третім особам. Для тестування ми просимо знеособлену таблицю.</p></details>
+      <details><summary>У нас уже є свій скрипт. Навіщо нам DocFlow?</summary><p>Щоб процес не залежав від однієї людини. DocFlow підтримує команда з гарантованим часом відповіді, а ваші шаблони переносяться без переробки.</p></details>
+      <details><summary>Чи працює з 1С або BAS?</summary><p>На старті DocFlow працює з вивантаженнями Excel і CSV, які вміють робити 1С, BAS і більшість білінгових систем. Прямі інтеграції плануємо за запитами тестувальників.</p></details>
+      <details><summary>Коли запуск і скільки це коштуватиме?</summary><p>Тестування з першою групою стартує восени 2026 року. Для учасників раннього доступу ціна фіксується на рівні обраного тарифу.</p></details>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-main">
+      <div class="foot-about">
+        <a class="brand" href="#top"><img src="assets/images/logo-mark.png" alt="" width="45" height="30">DocFlow</a>
+        <p>Пакети претензій, актів і платіжних доручень з вашої таблиці та ваших шаблонів Word.</p>
+      </div>
+      <nav class="foot-nav" aria-label="Розділи сайту">
+        <p class="foot-h">Продукт</p>
+        <a href="#solution">Що змінюється</a>
+        <a href="#how">Як це працює</a>
+        <a href="#pricing">Тарифи</a>
+        <a href="#faq">Питання</a>
+      </nav>
+      <div class="foot-cta">
+        <p class="foot-h">Ранній доступ</p>
+        <p>Зафіксуйте ціну раннього доступу і спробуйте DocFlow на своїх документах.</p>
+        <a class="btn white sm" href="#join" data-cta="footer">Залишити заявку <span class="arr" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 DocFlow</span>
+      <a class="creator-credit" href="https://shiny3q.github.io/DANIIL-GANZINA/" target="_blank" rel="noopener noreferrer" aria-label="Created by Daniil Ganzina — відкрити сайт автора">
+        <span class="creator-credit-text">created by</span>
+        <span class="creator-logo" aria-hidden="true"><img src="assets/images/daniil-ganzina-logo-black-theme-purple-lavanda.png" alt=""></span>
+      </a>
+      <a href="#top">Нагору ↑</a>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/app.js"></script>
+</body>
+</html>
