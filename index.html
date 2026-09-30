@@ -20,6 +20,43 @@
 </head>
 <body>
 
+<aside class="consent" id="consentBanner" aria-label="Налаштування аналітики" hidden>
+  <div class="consent-copy">
+    <strong>Аналітика без зайвих даних</strong>
+    <p>Google Analytics 4 і Microsoft Clarity допомагають побачити, що варто покращити. Вони вмикаються лише після вашої згоди.</p>
+    <button class="text-button" type="button" data-privacy-open>Як ми працюємо з даними</button>
+  </div>
+  <div class="consent-actions">
+    <button class="btn line sm" type="button" id="consentEssential">Лише необхідні</button>
+    <button class="btn sm" type="button" id="consentAccept">Дозволити аналітику</button>
+  </div>
+</aside>
+
+<dialog class="privacy-dialog" id="privacyDialog" aria-labelledby="privacyTitle">
+  <div class="privacy-dialog-head">
+    <div>
+      <p class="kicker">Прозорість даних</p>
+      <h2 id="privacyTitle">Як DocFlow використовує дані</h2>
+    </div>
+    <button class="dialog-close" type="button" aria-label="Закрити" data-privacy-close>×</button>
+  </div>
+  <div class="privacy-dialog-body">
+    <section>
+      <h3>Заявка на ранній доступ</h3>
+      <p>Поля форми надсилаються до Google Forms і зберігаються у пов'язаній Google Таблиці. Email потрібен лише для запрошення до тестування DocFlow.</p>
+    </section>
+    <section>
+      <h3>Аналітика сайту</h3>
+      <p>Після вашої згоди Google Analytics 4 рахує відвідування та події, а Microsoft Clarity формує теплові карти й записи взаємодії. Поля заявки не передаються в аналітичні події.</p>
+    </section>
+    <section>
+      <h3>Ваш вибір</h3>
+      <p>Якщо обрати «Лише необхідні», аналітичні скрипти не завантажуються. Вибір зберігається локально у вашому браузері.</p>
+    </section>
+  </div>
+  <button class="btn sm" type="button" data-privacy-close>Зрозуміло</button>
+</dialog>
+
 <!-- Заставка: логотип малюється штрихами (Lottie), потім відкривається сторінка -->
 <div class="splash" id="splash" role="presentation">
   <div class="splash-in">
@@ -249,7 +286,7 @@
         <p class="planline" id="planLine" hidden>Обраний тариф: <b id="planName"></b></p>
         <p class="err" id="formErr" role="alert"></p>
         <button class="btn" type="submit" id="submitBtn">Отримати ранній доступ <span class="arr" aria-hidden="true">→</span></button>
-        <p class="privacy">Email використовуємо лише для запрошення до тестування DocFlow.</p>
+        <p class="privacy">Email використовуємо лише для запрошення до тестування DocFlow. <button class="text-button" type="button" data-privacy-open>Як ми працюємо з даними</button></p>
       </form>
       <div class="ok" id="okBox" hidden>
         <h3>Ви в списку раннього доступу</h3>
@@ -300,6 +337,7 @@
     </div>
     <div class="foot-bottom">
       <span>© 2026 DocFlow</span>
+      <button class="foot-link" type="button" data-privacy-open>Дані та аналітика</button>
       <a class="creator-credit" href="https://shiny3q.github.io/DANIIL-GANZINA/" target="_blank" rel="noopener noreferrer" aria-label="Created by Daniil Ganzina — відкрити сайт автора">
         <span class="creator-credit-text">created by</span>
         <span class="creator-logo" aria-hidden="true"><img src="assets/images/daniil-ganzina-logo-black-theme-purple-lavanda.png" alt=""></span>
